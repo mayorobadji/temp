@@ -13,13 +13,46 @@ public class CryptoLib {
 	public static int[] EEA(int a, int b) {
 		// Note: as you can see in the test suite,
 		// your function should work for any (positive) value of a and b.
-		int gcd = -1;
-		int s = -1;
-		int t = -1;
+		/* R			  x			    y				Q
+		   a			  1			    0		
+		   b			  0			    1				a/b
+		   a - b (a/b)    1 - 0 (a/b)	0 - 1 (a/b)		b / (b - a/b)
+		   ...			  ...			...				...
+		*/
+		// initialize the x coefficients
+		int x = 1, x_next = 0;
+		// initialize the y coefficients
+		int y = 0, x_next = 1;
+		// initialize the remainders
+		int r = a, r_next = b;
+		// initialize the quotient
+		int q = 0;
+		// initialize temporary variables
+		int x_temp, y_temp, r_temp;
+		
+		// loop until we find r_next = 0
+		while (r_next != 0) {
+			// quotient
+			q = r / r_next;
+			// store the values in temp
+			x_temp = x_next;
+			y_temp = y_next;
+			r_temp = r;
+			// update the next coefficients
+			x_next = x - (q * x_next);
+			y_next = y - (q * y_next);
+			// update the current coefficients
+			x = x_temp;
+			y = y_temp;
+			r = r_next;
+			// get the new remainder
+			r_next = r_temp - (q * r_next)
+		}
+		
 		int[] result = new int[3];
-		result[0] = gcd;
-		result[1] = s;
-		result[2] = t;
+		result[0] = r;
+		result[1] = x;
+		result[2] = y;
 		return result;
 	}
 
