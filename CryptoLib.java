@@ -19,10 +19,14 @@ public class CryptoLib {
 		   a - b (a/b)    1 - 0 (a/b)	0 - 1 (a/b)		b / (b - a/b)
 		   ...			  ...			...				...
 		*/
+		if (a<0 || b<0){
+			System.out.println("At least one wrong number !! exiting...");
+			System.exit(1);
+		}
 		// initialize the x coefficients
 		int x = 1, x_next = 0;
 		// initialize the y coefficients
-		int y = 0, x_next = 1;
+		int y = 0, y_next = 1;
 		// initialize the remainders
 		int r = a, r_next = b;
 		// initialize the quotient
@@ -30,25 +34,26 @@ public class CryptoLib {
 		// initialize temporary variables
 		int x_temp, y_temp, r_temp;
 		
+		if (a != b) {
 		// loop until we find r_next = 0
-		while (r_next != 0) {
-			// quotient
-			q = r / r_next;
-			// store the values in temp
-			x_temp = x_next;
-			y_temp = y_next;
-			r_temp = r;
-			// update the next coefficients
-			x_next = x - (q * x_next);
-			y_next = y - (q * y_next);
-			// update the current coefficients
-			x = x_temp;
-			y = y_temp;
-			r = r_next;
-			// get the new remainder
-			r_next = r_temp - (q * r_next)
+			while (r_next != 0) {
+				// quotient
+				q = r / r_next;
+				// store the values in temp
+				x_temp = x_next;
+				y_temp = y_next;
+				r_temp = r;
+				// update the next coefficients
+				x_next = x - (q * x_next);
+				y_next = y - (q * y_next);
+				// update the current coefficients
+				x = x_temp;
+				y = y_temp;
+				r = r_next;
+				// get the new remainder
+				r_next = r_temp - (q * r_next);
+			}
 		}
-		
 		int[] result = new int[3];
 		result[0] = r;
 		result[1] = x;
